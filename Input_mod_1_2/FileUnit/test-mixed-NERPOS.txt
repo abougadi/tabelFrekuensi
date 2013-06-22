@@ -1,0 +1,232 @@
+1	1	Kennedy	Kennedy	0	7	NNP	LOCATION
+1	2	Town	Town	8	12	NNP	LOCATION
+1	3	is	be	13	15	VBZ	O
+1	4	at	at	16	18	IN	O
+1	5	the	the	19	22	DT	O
+1	6	western	western	23	30	JJ	O
+1	7	end	end	31	34	NN	O
+1	8	of	of	35	37	IN	O
+1	9	Sai	Sai	38	41	NNP	O
+1	10	Wan	Wan	42	45	NNP	O
+1	11	on	on	46	48	IN	O
+1	12	Hong	Hong	49	53	NNP	LOCATION
+1	13	Kong	Kong	54	58	NNP	LOCATION
+1	14	Island	Island	59	65	NNP	LOCATION
+1	15	in	in	66	68	IN	O
+1	16	Hong	Hong	69	73	NNP	LOCATION
+1	17	Kong	Kong	74	78	NNP	LOCATION
+1	18	.	.	79	80	.	O
+2	1	It	it	82	84	PRP	O
+2	2	was	be	85	88	VBD	O
+2	3	named	name	89	94	VBN	O
+2	4	after	after	95	100	IN	O
+2	5	Arthur	Arthur	101	107	NNP	PERSON
+2	6	Edward	Edward	108	114	NNP	PERSON
+2	7	Kennedy	Kennedy	115	122	NNP	PERSON
+2	8	,	,	123	124	,	O
+2	9	the	the	125	128	DT	O
+2	10	7th	7th	129	132	NNP	O
+2	11	Governor	Governor	133	141	NNP	O
+2	12	of	of	142	144	IN	O
+2	13	Hong	Hong	145	149	NNP	LOCATION
+2	14	Kong	Kong	150	154	NNP	LOCATION
+2	15	from	from	155	159	IN	O
+2	16	1872	1872	160	164	CD	NUMBER	1872.0-1877.0
+2	17	to	to	165	167	TO	NUMBER	1872.0-1877.0
+2	18	1877	1877	168	172	CD	NUMBER	1872.0-1877.0
+2	19	.	.	173	174	.	O
+3	1	John	John	176	180	NNP	ORGANIZATION
+3	2	F.	F.	181	183	NNP	ORGANIZATION
+3	3	Kennedy	Kennedy	184	191	NNP	ORGANIZATION
+3	4	College	College	192	199	NNP	ORGANIZATION
+3	5	was	be	200	203	VBD	O
+3	6	founded	found	204	211	VBN	O
+3	7	in	in	212	214	IN	O
+3	8	1965	1965	215	219	CD	NUMBER	1965.0
+3	9	in	in	220	222	IN	O
+3	10	Wahoo	Wahoo	223	228	NNP	LOCATION
+3	11	,	,	229	230	,	O
+3	12	Nebraska	Nebraska	231	239	NNP	LOCATION
+3	13	,	,	240	241	,	O
+3	14	one	one	242	245	CD	NUMBER	1.0
+3	15	of	of	246	248	IN	O
+3	16	six	six	249	252	CD	NUMBER	6.0
+3	17	colleges	college	253	261	NNS	O
+3	18	started	start	262	269	VBN	O
+3	19	by	by	270	272	IN	O
+3	20	small-town	small-town	273	283	JJ	O
+3	21	businessmen	businessman	284	295	NNS	O
+3	22	on	on	296	298	IN	O
+3	23	the	the	299	302	DT	O
+3	24	model	model	303	308	NN	O
+3	25	of	of	309	311	IN	O
+3	26	Parsons	Parsons	312	319	NNP	ORGANIZATION
+3	27	College	College	320	327	NNP	ORGANIZATION
+3	28	in	in	328	330	IN	O
+3	29	Fairfield	Fairfield	331	340	NNP	LOCATION
+3	30	,	,	341	342	,	O
+3	31	Iowa	Iowa	343	347	NNP	LOCATION
+3	32	.	.	348	349	.	O
+4	1	John	John	351	355	NNP	PERSON
+4	2	F.	F.	356	358	NNP	PERSON
+4	3	Kennedy	Kennedy	359	366	NNP	PERSON
+4	4	Library	Library	367	374	NNP	PERSON
+4	5	,	,	375	376	,	O
+4	6	the	the	377	380	DT	O
+4	7	nation	nation	381	387	NN	O
+4	8	's	's	388	390	POS	O
+4	9	official	official	391	399	JJ	O
+4	10	memorial	memorial	400	408	NN	O
+4	11	to	to	409	411	TO	O
+4	12	President	President	412	421	NNP	O
+4	13	Kennedy	Kennedy	422	429	NNP	PERSON
+4	14	,	,	430	431	,	O
+4	15	the	the	432	435	DT	O
+4	16	thirty-fifth	thirty-fifth	436	448	JJ	O
+4	17	president	president	449	458	NN	O
+4	18	of	of	459	461	IN	O
+4	19	the	the	462	465	DT	O
+4	20	United	United	466	472	NNP	LOCATION
+4	21	States	States	473	479	NNPS	LOCATION
+4	22	,	,	480	481	,	O
+4	23	is	be	482	484	VBZ	O
+4	24	located	locate	485	492	VBN	O
+4	25	at	at	493	495	IN	O
+4	26	220	220	496	499	CD	NUMBER	220.0
+4	27	William	William	500	507	NNP	PERSON
+4	28	T.	T.	508	510	NNP	PERSON
+4	29	Morrissey	Morrissey	511	520	NNP	PERSON
+4	30	Boulevard	Boulevard	521	530	NNP	PERSON
+4	31	in	in	531	533	IN	O
+4	32	Boston	Boston	534	540	NNP	LOCATION
+4	33	,	,	541	542	,	O
+4	34	Massachusetts	Massachusetts	543	556	NNP	LOCATION
+4	35	.	.	557	558	.	O
+5	1	John	John	560	564	NNP	PERSON
+5	2	F.	F.	565	567	NNP	PERSON
+5	3	Kennedy	Kennedy	568	575	NNP	PERSON
+5	4	Library	Library	576	583	NNP	PERSON
+5	5	includes	include	584	592	VBZ	O
+5	6	a	a	593	594	DT	O
+5	7	small	small	595	600	JJ	O
+5	8	cafe	cafe	601	605	NN	O
+5	9	,	,	606	607	,	O
+5	10	located	locate	608	615	VBN	O
+5	11	on	on	616	618	IN	O
+5	12	the	the	619	622	DT	O
+5	13	entrance	entrance	623	631	NN	O
+5	14	level	level	632	637	NN	O
+5	15	,	,	638	639	,	O
+5	16	that	that	640	644	WDT	O
+5	17	serves	serve	645	651	VBZ	O
+5	18	a	a	652	653	DT	O
+5	19	light	light	654	659	JJ	O
+5	20	menu	menu	660	664	NN	O
+5	21	during	during	665	671	IN	O
+5	22	the	the	672	675	DT	O
+5	23	hours	hour	676	681	NNS	O
+5	24	of	of	682	684	IN	O
+5	25	9:00	9:00	685	689	CD	TIME	9:00am
+5	26	am	be	690	692	VBP	TIME	9:00am
+5	27	until	until	693	698	IN	O
+5	28	5:00	5:00	699	703	CD	TIME	5:00pm
+5	29	pm.	pm.	704	707	NN	TIME	5:00pm
+5	30	,	,	708	709	,	O
+5	31	admission	admission	710	719	NN	O
+5	32	cost	cost	720	724	NN	O
+5	33	is	be	725	727	VBZ	O
+5	34	$	$	728	729	$	MONEY	$12.0
+5	35	12	12	730	732	CD	MONEY	$12.0
+5	36	,	,	733	734	,	O
+5	37	closed	close	735	741	VBN	O
+5	38	Jan.	Jan.	742	746	NNP	DATE	****0101
+5	39	1	1	747	748	CD	DATE	****0101
+5	40	,	,	749	750	,	O
+5	41	Thanksgiving	Thanksgiving	751	763	NNP	O
+5	42	and	and	764	767	CC	O
+5	43	Christmas	Christmas	768	777	NNP	O
+5	44	.	.	778	779	.	O
+6	1	Kennedy	Kennedy	781	788	NNP	PERSON
+6	2	presided	preside	789	797	VBD	O
+6	3	over	over	798	802	IN	O
+6	4	the	the	803	806	DT	O
+6	5	first	first	807	812	JJ	ORDINAL	1.0
+6	6	government	government	813	823	NN	O
+6	7	budget	budget	824	830	NN	O
+6	8	to	to	831	833	TO	O
+6	9	top	top	834	837	VB	O
+6	10	the	the	838	841	DT	O
+6	11	100	100	842	845	CD	MONEY	E1.0E11
+6	12	billion	billion	846	853	CD	MONEY	E1.0E11
+6	13	euro	euro	854	858	NN	MONEY	E1.0E11
+6	14	mark	mark	859	863	NN	O
+6	15	.	.	864	865	.	O
+7	1	GDP	GDP	867	870	NNP	O
+7	2	expanded	expand	871	879	VBN	O
+7	3	by	by	880	882	IN	O
+7	4	more	more	883	887	JJR	O
+7	5	than	than	888	892	IN	O
+7	6	5.5	5.5	893	896	CD	NUMBER	>5.5
+7	7	percent	percent	897	904	NN	O
+7	8	per	per	905	908	IN	O
+7	9	year	year	909	913	NN	O
+7	10	between	between	914	921	IN	O
+7	11	1961	1961	922	926	CD	NUMBER	1961.0-1963.0
+7	12	and	and	927	930	CC	NUMBER	1961.0-1963.0
+7	13	1963	1963	931	935	CD	NUMBER	1961.0-1963.0
+7	14	.	.	936	937	.	O
+8	1	John	John	939	943	NNP	PERSON
+8	2	F.	F.	944	946	NNP	PERSON
+8	3	Kennedy	Kennedy	947	954	NNP	PERSON
+8	4	,	,	955	956	,	O
+8	5	Jr.	Jr.	957	960	NNP	PERSON
+8	6	died	die	961	965	VBD	O
+8	7	when	when	966	970	WRB	O
+8	8	the	the	971	974	DT	O
+8	9	Piper	Piper	975	980	NNP	PERSON
+8	10	Saratoga	Saratoga	981	989	NNP	PERSON
+8	11	light	light	990	995	JJ	O
+8	12	aircraft	aircraft	996	1004	NN	O
+8	13	he	he	1005	1007	PRP	O
+8	14	was	be	1008	1011	VBD	O
+8	15	piloting	pilot	1012	1020	VBG	O
+8	16	crashed	crash	1021	1028	VBD	O
+8	17	into	into	1029	1033	IN	O
+8	18	the	the	1034	1037	DT	O
+8	19	Atlantic	Atlantic	1038	1046	NNP	LOCATION
+8	20	Ocean	Ocean	1047	1052	NNP	LOCATION
+8	21	off	off	1053	1056	IN	O
+8	22	the	the	1057	1060	DT	O
+8	23	coast	coast	1061	1066	NN	O
+8	24	of	of	1067	1069	IN	O
+8	25	Martha	Martha	1070	1076	NNP	PERSON
+8	26	's	's	1077	1079	POS	O
+8	27	Vineyard	Vineyard	1080	1088	NNP	O
+8	28	,	,	1089	1090	,	O
+8	29	Massachusetts	Massachusetts	1091	1104	NNP	LOCATION
+8	30	.	.	1105	1106	.	O
+9	1	The	the	1108	1111	DT	O
+9	2	National	National	1112	1120	NNP	ORGANIZATION
+9	3	Transportation	Transportation	1121	1135	NNP	ORGANIZATION
+9	4	Safety	Safety	1136	1142	NNP	ORGANIZATION
+9	5	Board	Board	1143	1148	NNP	ORGANIZATION
+9	6	-LRB-	-lrb-	1149	1154	-LRB-	O
+9	7	NTSB	NTSB	1155	1159	NNP	ORGANIZATION
+9	8	-RRB-	-rrb-	1160	1165	-RRB-	O
+9	9	ruled	rule	1166	1171	VBD	O
+9	10	the	the	1172	1175	DT	O
+9	11	crash	crash	1176	1181	NN	O
+9	12	was	be	1182	1185	VBD	O
+9	13	caused	cause	1186	1192	VBN	O
+9	14	by	by	1193	1195	IN	O
+9	15	:	:	1196	1197	:	O
+9	16	``	``	1198	1200	``	O
+9	17	the	the	1201	1204	DT	O
+9	18	pilot	pilot	1205	1210	NN	O
+9	19	's	's	1211	1213	POS	O
+9	20	failure	failure	1214	1221	NN	O
+9	21	to	to	1222	1224	TO	O
+9	22	maintain	maintain	1225	1233	VB	O
+9	23	control	control	1234	1241	NN	O
+9	24	''	''	1242	1244	''	O
+9	25	.	.	1245	1246	.	O
