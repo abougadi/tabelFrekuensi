@@ -127,17 +127,8 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
 //echo "ITEM :: " . json_encode($objekUnit->array_word) . "<br/>";
         for($i=0; $i < $totalToken; $i++)
         {
-            $kataTarget = "";
             $POS = $objekUnit->array_pos[$i];
-//            if( $this->penanda_filter_token_entity & Umum::FILTER_LEMMA )
-//            if(!Pembantu::gunakanLemma($this->penanda_filter_token_entity))    // Jika dipilih FILTER_TANPA_KRITERIA atau NER, gunakan kata untuk pemrosesan.
-//            {
-//                $kataTarget = $objekUnit->array_word[$i];      // gunakan kata.
-//            }
-//            else
-//            {
-                $kataTarget = $objekUnit->array_token[$i];      // gunakan lemma.
-//            }
+            $kataTarget = $objekUnit->array_token[$i];      // gunakan lemma.
 
             $perluProses = true;
             // 20120906 :: untuk memastikan apabila pilihan kategori adalah dalam pilihan POS (saja), maka berlaku proses filtering, tag POS harus sama. Apabila pilihan kategori adalah lemma, maka semua lemma akan lolos tanpa dicek POS nya. ;)
@@ -171,6 +162,8 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
         $indexSebelumnya = -999;        // digunakan untuk pengecekan, apakah entity terdiri dari lebih dari satu kata. jika berurutan dengan kata sebelumnya, berarti terdiri lebih dari satu kata.
         $indexElemenSebelumnya = 0;     // indeks elemen sebelumnya di array hasil. (digunakan untuk memasukkan entity)
 
+        //26-06-2013: tambahan 2 variable di parameter Pembantu::masukkanElemenUnikTerurut, untuk menangani problem missing entity.
+        $kataSamaSebelumnya = null;
         for($i=0; $i < $totalToken; $i++)
         {
             $NER = $objekUnit->array_ner[$i];
@@ -191,21 +184,31 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
 
             if(($i - $indexSebelumnya == 1) && !(Umum::FILTER_TANPA_KRITERIA & $this->penanda_filter_token_entity))  //berurutan.. gabungkan ke elemen entity sebelumnya.
             {
-//echo "GABUNG<br/>";
+//echo "GABUNG to $indexElemenSebelumnya : $kataTarget , POS: $POSTarget , NER: $NERTarget<br/>";
                 //20130401 : menemukan problem disini, menyebabkan double token, solusi sementara, selalu cek terhadap elemen-elemen sebelumnya.
-                $arrayHasil[$indexElemenSebelumnya] = $arrayHasil[$indexElemenSebelumnya] . " " . $kataTarget;
+                //20130626 : menemukan problem lain, substring yang tidak dimasukkan ke arrayHasil karena kata awalnya sudah ada di array sebelumnya. contoh: "Kennedy" dengan "Kennedy Administration" -> "Kennedy Administration" tidak dimasukkan ke arrayHasil. Solusi : beri flag ketika terjadi kejadian serupa.
+                If($kataSamaSebelumnya != null) //disini terjadi kasus di atas, flag diset.
+                {
+                    array_push($arrayHasil,$kataSamaSebelumnya . " " . $kataTarget);
+                    $kataSamaSebelumnya = null;
+                    $indexElemenSebelumnya = count($arrayHasil)-1;
+                }
+                else
+                {
+                    $arrayHasil[$indexElemenSebelumnya] = $arrayHasil[$indexElemenSebelumnya] . " " . $kataTarget;
+                }
             }
             else
             {
-//echo "PISAH<br/>";
+//echo "PISAH $kataTarget , POS: $POSTarget , NER: $NERTarget<br/>";
                 if(Umum::FILTER_TANPA_KRITERIA & $this->penanda_filter_token_entity)    //20120907 : jika pilihan kategori adalah TANPA_KRITERIA, maka tetap gunakan filtering stopwords.
                 {
-                    $indexElemenSebelumnya = Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords,false);
+                    $indexElemenSebelumnya = Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords,false,true,$kataSamaSebelumnya);
                 }
                 else
                 {
 //Pembantu::cetakDebug("debug2 : $kataTarget in " . json_encode($arrayHasil) . "<br/>");
-                    $indexElemenSebelumnya = Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords,true);
+                    $indexElemenSebelumnya = Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords,true,true,$kataSamaSebelumnya);
                 }
             }
             $indexSebelumnya = $i;  //simpan index sebelumnya

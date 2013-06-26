@@ -1,5 +1,4 @@
 <?php
-/* Trial Update */
 include_once 'Umum.php';
 include_once 'Pembantu.php';
 /**

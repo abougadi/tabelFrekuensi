@@ -460,7 +460,7 @@ if($arrayKataPisah[0] == 'wear')
     }
 
     //public static function masukkanElemenTerurut(&$array,$elemen,$array_stopwords,$array_idx_alphabet_stopwords,$lewatiStopWords=false) :: memasukkan elemen ke array secara terurut.
-    public static function masukkanElemenUnikTerurut(&$array,$elemen,$array_stopwords,$array_idx_alphabet_stopwords,$lewatiStopWords=false)
+    public static function masukkanElemenUnikTerurut(&$array,$elemen,$array_stopwords,$array_idx_alphabet_stopwords,$lewatiStopWords=false,$masukkanMultiwords=false,&$kataSebelumnya=null)
     {
         $idx = -1;          // mulai dari -1, karena akan diincrement dulu sebelum diproses.
         $panjang_array = count($array);
@@ -486,11 +486,19 @@ if($arrayKataPisah[0] == 'wear')
 
             if($hasil_perbandingan == 0)  //menemukan elemen sama, skip.
             {
+                if($masukkanMultiwords == true) //25062013 : another special handling...
+                {
+                    $kataSebelumnya = $elemen;
+                }
                 $perlu_ditambahkan = false;
                 break;
             }
             else if($hasil_perbandingan > 0)
             {
+                if($masukkanMultiwords == true)
+                {
+                    $kataSebelumnya = null;
+                }
                 $perlu_ditambahkan = true;
                 break;
             }
