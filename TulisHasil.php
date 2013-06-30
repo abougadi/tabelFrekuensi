@@ -62,7 +62,10 @@ echo "[abouDebug]TulisFile " . $namaFile . "<br/>";
     {
 //echo "JUMLAH-1 " . count($array_nama_file) . json_encode($array_nama_file) . "<br/>";
 //echo "JUMLAH-2 " . count($array_objek_file_unit) . json_encode($array_objek_file_unit) . "<br/>";
-        mkdir(Umum::FOLDER_HASIL_RINGKASAN . $_SESSION["timestamp"]);
+        if(!is_dir(Umum::FOLDER_HASIL_RINGKASAN . $_SESSION["timestamp"]))
+        {
+            mkdir(Umum::FOLDER_HASIL_RINGKASAN . $_SESSION["timestamp"]);
+        }
 
         $fptr1 = fopen(Umum::FOLDER_HASIL_RINGKASAN . $_SESSION["timestamp"] . "/RingkasanToken" . Umum::AKHIRAN_FILE_RINGKASAN_ALL,'w');
         $fptr3 = fopen(Umum::FOLDER_HASIL_RINGKASAN . $_SESSION["timestamp"] . "/RingkasanUnit" . Umum::AKHIRAN_FILE_RINGKASAN_ALL,'w');

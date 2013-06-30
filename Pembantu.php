@@ -378,10 +378,6 @@ class Pembantu {
                     //20120910 : tambahkan kondisi, || (Pembantu::ambilNilaiTag($arrayNER[$idxNER]) == 0) -> untuk menangani pilihan kriteria lemma atau tanpa kriteria.
                     if( (Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]) != $nerSebelumnya && Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]) != $nerSetelahnya) || (Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]) == 0) || ($penandaFilterTokenEntity <= Umum::FILTER_MASK_POS))
                     {
-if($arrayKataPisah[0] == 'wear')
-{
-    echo "Chosen Filter: " . $penandaFilterTokenEntity . " ---> " . Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]) . "<br/>";
-}
                         $jumlah_kata++;
                     }
                 }
@@ -470,6 +466,7 @@ if($arrayKataPisah[0] == 'wear')
         //filtering stopwords.
         if(!self::cekToken($elemen,$array_stopwords,$array_idx_alphabet_stopwords) && !$lewatiStopWords)
         {
+//echo "[abouDebug] $elemen kena filter Stop Words!!!<br/>";
             return false;
         }
 //echo "[abouDebug]masukkan token $elemen <br/>";

@@ -134,10 +134,18 @@ class Pemroses {
     public function pemrosesanUtamaModul_1()
     {
         //Buat folder-folder output
-        mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN,0777,true);
-        mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU,0777,true);
-        mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC,0777,true);
-
+        if(!is_dir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN))
+        {
+            mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN,0777,true);            
+        }
+        if(!is_dir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU))
+        {
+            mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU,0777,true);            
+        }
+        if(!is_dir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC))
+        {
+            mkdir(Umum::FOLDER_HASIL_1 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC,0777,true);
+        }
         //lakukan pemrosesan utama
         for($i=0;$i<count($this->array_nama_file_acuan);$i++)               // untuk tiap file Acuan, lakukan pemrosesan untuk semua file unit
         {
@@ -280,9 +288,22 @@ class Pemroses {
     public function pemrosesanUtamaModul_2()
     {
         //Buat folder-folder output
-        mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU,0777,true);
-        mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC,0777,true);
-        mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN,0777,true);
+        
+        if(!is_dir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU))
+        {
+            mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_EDU,0777,true);
+        }
+        
+        if(!is_dir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC))
+        {
+            mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_TABEL_FREQ_STC,0777,true);
+        }
+
+        if(!is_dir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN))
+        {
+            mkdir(Umum::FOLDER_HASIL_2 . $_SESSION["timestamp"] . Umum::FOLDER_LIST_TOKEN,0777,true);            
+        }
+
 
         //proses list token
         $this->pemrosesanListToken_semuaFile();
@@ -509,7 +530,10 @@ class Pemroses {
     public function pemrosesanUtamaModul_3($unitDokumen)
     {
         //Buat folder-folder output
-        mkdir(Umum::FOLDER_HASIL_3 . $_SESSION["timestamp"] ,0777,true);
+        if(!is_dir(Umum::FOLDER_HASIL_3 . $_SESSION["timestamp"]))
+        {
+            mkdir(Umum::FOLDER_HASIL_3 . $_SESSION["timestamp"] ,0777,true);            
+        }
         $this->hitungNilaiIUF($unitDokumen);
     }
 
@@ -581,7 +605,11 @@ class Pemroses {
     public function pemrosesanUtamaModul_4()
     {
         //Buat folder-folder output
-        mkdir(Umum::FOLDER_HASIL_4 . $_SESSION["timestamp"] ,0777,true);
+        if(!is_dir(Umum::FOLDER_HASIL_4 . $_SESSION["timestamp"]))
+        {
+            mkdir(Umum::FOLDER_HASIL_4 . $_SESSION["timestamp"] ,0777,true);
+        }
+
         $this->hitungNormalWeight();
     }
 
@@ -695,7 +723,11 @@ echo "Hasil Similarity Score = " . json_encode($array_hasil) . "<br/>";
     public function pemrosesanUtamaModul_5()
     {
         //Buat folder-folder output
-        mkdir(Umum::FOLDER_HASIL_5 . $_SESSION["timestamp"] ,0777,true);
+        if(!is_dir(Umum::FOLDER_HASIL_5 . $_SESSION["timestamp"]))
+        {
+            mkdir(Umum::FOLDER_HASIL_5 . $_SESSION["timestamp"] ,0777,true);
+        }
+
         $totalFileTarget = count($this->array_nilai_target_mod5);
         
         for($i=0; $i<$totalFileTarget;$i++)

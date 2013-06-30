@@ -39,7 +39,7 @@
 3	4	in	in	210	212	IN	O
 3	5	Virginia	Virginia	213	221	NNP	LOCATION
 3	6	where	where	222	227	WRB	O
-3	7	his	he	228	231	PRP	O
+3	7	his	he	228	231	PRP$	O
 3	8	family	family	232	238	NN	O
 3	9	owned	own	239	244	VBD	O
 3	10	tobacco	tobacco	245	252	NN	O
@@ -49,7 +49,7 @@
 3	14	.	.	276	277	.	O
 4	1	After	after	279	284	IN	O
 4	2	both	both	285	289	DT	O
-4	3	his	he	290	293	PRP	O
+4	3	his	he	290	293	PRP$	O
 4	4	father	father	294	300	NN	O
 4	5	and	and	301	304	CC	O
 4	6	older	older	305	310	JJR	O
@@ -70,7 +70,7 @@
 4	21	,	,	393	394	,	O
 4	22	who	who	395	398	WP	O
 4	23	promoted	promote	399	407	VBD	O
-4	24	his	he	408	411	PRP	O
+4	24	his	he	408	411	PRP$	O
 4	25	career	career	412	418	NN	O
 4	26	.	.	419	420	.	O
 5	1	George	George	422	428	NNP	PERSON
@@ -109,14 +109,14 @@
 6	14	slaves	slave	601	607	NNS	O
 6	15	,	,	608	609	,	O
 6	16	then	then	610	614	RB	O
-6	17	his	he	615	618	PRP	O
+6	17	his	he	615	618	PRP$	O
 6	18	wife	wife	619	623	NN	O
 6	19	brought	bring	624	631	VBD	O
 6	20	85	85	632	634	CD	NUMBER	85.0
 6	21	slaves	slave	635	641	NNS	O
 6	22	inherited	inherit	642	651	VBN	O
 6	23	from	from	652	656	IN	O
-6	24	her	she	657	660	PRP	O
+6	24	her	she	657	660	PRP$	O
 6	25	late	late	661	665	JJ	O
 6	26	husband	husband	666	673	NN	O
 6	27	's	's	674	676	POS	O
@@ -134,7 +134,7 @@
 7	10	them	they	724	728	PRP	O
 7	11	placed	place	729	735	VBD	O
 7	12	at	at	736	738	IN	O
-7	13	his	he	739	742	PRP	O
+7	13	his	he	739	742	PRP$	O
 7	14	plantations	plantation	743	754	NNS	O
 7	15	at	at	755	757	IN	O
 7	16	Mount	Mount	758	763	NNP	LOCATION
@@ -156,7 +156,7 @@
 8	14	Memorial	Memorial	870	878	NNP	ORGANIZATION
 8	15	,	,	879	880	,	O
 8	16	have	have	881	885	VBP	O
-8	17	their	they	886	891	PRP	O
+8	17	their	they	886	891	PRP$	O
 8	18	name	name	892	896	NN	O
 8	19	given	give	897	902	VBN	O
 8	20	in	in	903	905	IN	O

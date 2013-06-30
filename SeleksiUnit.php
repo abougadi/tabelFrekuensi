@@ -34,12 +34,12 @@ class SeleksiUnit {
 //}
         if( !Pembantu::gunakanLemma($this->penanda_filter_token_entity) || !($this->penanda_filter_token_entity & Umum::FILTER_TANPA_KRITERIA) ) // aboubakr : 20120903 -> mengubah kondisi filter tanpa kriteria.
         {
-echo "[aboubakrTmp] Filter StopWords " . $this->penanda_filter_token_entity . "<br/>";
+//echo "[aboubakrTmp] Filter StopWords " . $this->penanda_filter_token_entity . "<br/>";
             $this->perluFilterStopWords = true;
         }
         else
         {
-echo "[aboubakrTmp] TIDAK Filter StopWords " . $this->penanda_filter_token_entity . "<br/>";
+//echo "[aboubakrTmp] TIDAK Filter StopWords " . $this->penanda_filter_token_entity . "<br/>";
             $this->perluFilterStopWords = false;
         }
 
@@ -124,28 +124,39 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
         /* @var $objekUnit Unit */
         $arrayHasil = array();
         $totalToken = count($objekUnit->array_word);
-//echo "ITEM :: " . json_encode($objekUnit->array_word) . "<br/>";
+//echo "ITEM WORD :: " . json_encode($objekUnit->array_word) . "<br/>";
         for($i=0; $i < $totalToken; $i++)
         {
             $POS = $objekUnit->array_pos[$i];
-            $kataTarget = $objekUnit->array_token[$i];      // gunakan lemma.
+            if(Pembantu::ambilNilaiTag($POS) == Umum::FILTER_POS_PRP)       //aboubakr 30-06-2013 : special handling untuk PRP, unit yang dipakai selalu word.
+            {
+                $kataTarget = $objekUnit->array_word[$i];      // gunakan word untuk PRP.
+            }
+            else
+            {
+                $kataTarget = $objekUnit->array_token[$i];      // gunakan lemma.
+            }
 
             $perluProses = true;
+
             // 20120906 :: untuk memastikan apabila pilihan kategori adalah dalam pilihan POS (saja), maka berlaku proses filtering, tag POS harus sama. Apabila pilihan kategori adalah lemma, maka semua lemma akan lolos tanpa dicek POS nya. ;)
             if(!(Pembantu::ambilNilaiTag($POS) & $this->penanda_filter_token_entity) && ($this->penanda_filter_token_entity > Umum::FILTER_LEMMA))
             {
                 $perluProses = false;
             }
+
             if(!$perluProses)   // skip jika tidak perlu diproses.
             {
                 continue;
             }
-//if($kataTarget == 'wear')
-//Pembantu::cetakDebug("[abouDebug]POS $kataTarget = $POS<br/>");
-//echo "KataTarget :: $kataTarget <br/>";
-            if(Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords))
+
+            if(Pembantu::masukkanElemenUnikTerurut($arrayHasil,$kataTarget, $this->array_stopwords,$this->array_index_alph_stopwords) !== false)
             {
                 //Pembantu::cetakDebug("elemen ke-" . count($arrayHasil) . " $kataTarget => $POS <br/>");
+            }
+            else
+            {
+                //Pembantu::cetakDebug("Kata termasuk dalam stopwords :: $kataTarget <br/>");
             }
         }
 //echo "<br/><br/>";
@@ -379,8 +390,14 @@ Pembantu::cetakDebug("Hasil Frekuensi Untuk File - " . $this->array_objek_unit[$
             $akhiranNamaFile = Umum::AKHIRAN_TABEL_FREQ_EDU;
         }
 
-        mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_TOKEN,0777,true);        //buat folder keluaran 1.
-        mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_FREQ_TABLE,0777,true);   //buat folder keluaran 2.
+        if(!is_dir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_TOKEN))
+        {
+            mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_TOKEN,0777,true);        //buat folder keluaran 1.            
+        }
+        if(!is_dir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_FREQ_TABLE))
+        {
+            mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_FREQ_TABLE,0777,true);   //buat folder keluaran 2.
+        }
 //        mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_FILTERED_FREQ_TABLE_TR,0,true); //buat folder keluaran 2 - transpose. No Need
         for($i=0;$i<$totalHasil;$i++)
         {

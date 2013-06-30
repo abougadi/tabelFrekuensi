@@ -43,10 +43,14 @@ class Unit {
 echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total untuk file $nama : " . count($this->array_unit_string) . " Unit.=========</span><br/><br/>";
             if($pilihanUnitString >= Umum::UNIT_STRING_DOUBLE_EDU)
             {
-                mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_LIST_MULTIPLE_UNIT,0777,true);    //buat folder keluaran 3.   //aboubakr 27012013 : tambah file keluaran, list unit untuk multiple EDU.
+                if(!is_dir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_LIST_MULTIPLE_UNIT))
+                {
+                    mkdir(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_LIST_MULTIPLE_UNIT,0777,true);    //buat folder keluaran 3.   //aboubakr 27012013 : tambah file keluaran, list unit untuk multiple EDU.
+                }
+
                 if($pilihanUnitString == Umum::UNIT_STRING_DOUBLE_EDU)
                 {
-                    $this->debugMultipleEDU(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_LIST_MULTIPLE_UNIT . "$nama-2EDU" . Umum::AKHIRAN_HASIL_SELEKSI_UNIT);                    
+                    $this->debugMultipleEDU(Umum::FOLDER_HASIL_SELEKSI_UNIT . $_SESSION["timestamp"] . Umum::FOLDER_LIST_MULTIPLE_UNIT . "$nama-2EDU" . Umum::AKHIRAN_HASIL_SELEKSI_UNIT);
                 }
                 else
                 {
@@ -86,7 +90,25 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                 if(Pembantu::gunakanLemma($this->pilihanKriteria))
                 {
                     $this->array_unit_string[0] = array();
-                    $this->array_unit_string[0] = &$this->array_token;
+                    if($this->pilihanKriteria & Umum::FILTER_POS_PRP)  //aboubakr 30-06-2013 : special handling untuk PRP, unit yang dipakai selalu word. Jika PRP masuk dalam pilihan kriteria, lakukan prosedur khusus.
+                    {
+                        $total = count($this->array_token);
+                        for($i=0;$i<$total;$i++)
+                        {
+                            if(Pembantu::ambilNilaiTag($this->array_pos[$i]) == Umum::FILTER_POS_PRP)
+                            {
+                                array_push($this->array_unit_string[0], $this->array_word[$i]);
+                            }
+                            else
+                            {
+                                array_push($this->array_unit_string[0], $this->array_token[$i]);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $this->array_unit_string[0] = &$this->array_token;
+                    }
                 }
                 else
                 {
@@ -104,13 +126,14 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                     $indexTokenAkhir = $indexTokenSekarang + $this->array_jml_kata_per_sentence[$i];
                     for($j = $indexTokenSekarang; $j < $indexTokenAkhir; $j++)
                     {
-                        if(Pembantu::gunakanLemma($this->pilihanKriteria))
+                        if(Pembantu::gunakanLemma($this->pilihanKriteria)
+                                && (Pembantu::ambilNilaiTag($this->array_pos[$j]) != Umum::FILTER_POS_PRP))       //aboubakr 30-06-2013 : special handling untuk PRP, unit yang dipakai selalu word.
                         {
-                            array_push($this->array_unit_string[$i], $this->array_token[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
+                            array_push($this->array_unit_string[$i], $this->array_token[$j]);           //masukkan token ke array unit string, pada posisi yang sesuai.
                         }
                         else
                         {
-                            array_push($this->array_unit_string[$i], $this->array_word[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
+                            array_push($this->array_unit_string[$i], $this->array_word[$j]);            //masukkan word ke array unit string, pada posisi yang sesuai.
                         }
                     }
                     $indexTokenSekarang = $indexTokenAkhir;
@@ -126,13 +149,14 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                     $indexTokenAkhir = $indexTokenSekarang + $this->array_jml_kata_per_edu[$i];
                     for($j = $indexTokenSekarang; $j < $indexTokenAkhir; $j++)
                     {
-                        if(Pembantu::gunakanLemma($this->pilihanKriteria))
+                        if(Pembantu::gunakanLemma($this->pilihanKriteria)
+                                && (Pembantu::ambilNilaiTag($this->array_pos[$j]) != Umum::FILTER_POS_PRP))     //aboubakr 30-06-2013 : special handling untuk PRP, unit yang dipakai selalu word.
                         {
                             array_push($this->array_unit_string[$i], $this->array_token[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
                         }
                         else
                         {
-                            array_push($this->array_unit_string[$i], $this->array_word[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
+                            array_push($this->array_unit_string[$i], $this->array_word[$j]);    //masukkan word ke array unit string, pada posisi yang sesuai.
                         }
                     }
                     $indexTokenSekarang = $indexTokenAkhir;
@@ -185,13 +209,14 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                     $arrayUnit2 = array();
                     for($j=$indexTokenSekarang;$j<$indexTokenAkhir;$j++)
                     {
-                        if(Pembantu::gunakanLemma($this->pilihanKriteria))
+                        if((Pembantu::gunakanLemma($this->pilihanKriteria)) 
+                                && (Pembantu::ambilNilaiTag($this->array_pos[$j]) != Umum::FILTER_POS_PRP))     //aboubakr 30-06-2013 : special handling untuk PRP, unit yang dipakai selalu word.
                         {
                             array_push($arrayUnit2, $this->array_token[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
                         }
                         else
                         {
-                            array_push($arrayUnit2, $this->array_word[$j]);    //masukkan token ke array unit string, pada posisi yang sesuai.
+                            array_push($arrayUnit2, $this->array_word[$j]);    //masukkan word ke array unit string, pada posisi yang sesuai.
                         }
                     }
                     $indexTokenSekarang = $indexTokenAkhir;

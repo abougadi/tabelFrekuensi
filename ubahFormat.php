@@ -38,7 +38,11 @@
 
 //    echo "<br/>" . json_encode($array_nama_file_target);
 
-    mkdir($folder,0777,true);  // buat folder keluaran.
+    if(!is_dir($folder))
+    {
+        mkdir($folder,0777,true);  // buat folder keluaran.
+    }
+
     $totalMasukan = count($array_nama_file_target);
     for($i=0; $i < $totalMasukan; $i++)
     {
