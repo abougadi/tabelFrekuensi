@@ -49,7 +49,7 @@ class Acuan {
     {
 //echo '[abouDebug]....Mempersiapkan File Acuan....<br/>';
         //Mengambil token dan nerpos.
-        Pembantu::muatFileNERPOS(Umum::FOLDER_ACUAN . $this->nama . Umum::AKHIRAN_NERPOS_FILE,$this->array_word,$this->array_token,$this->array_ner,$this->array_pos);
+        Pembantu::muatFileNERPOS(false,Umum::FOLDER_ACUAN . $this->nama . Umum::AKHIRAN_NERPOS_FILE,$this->array_word,$this->array_token,$this->array_ner,$this->array_pos,null,null);  //abou 21-08-2013 : sesuaikan dengan modifikasi fungsi untuk load NERPOS.
         //Ambil jumlah kata untuk tiap unit
         Pembantu::muatFileEDU(Umum::FOLDER_ACUAN . $this->nama . Umum::AKHIRAN_EDU_FILE, $this->array_jml_kata_per_edu, $this->array_jml_kata_per_sentence);
 //        $this->hilangkanStopWords();

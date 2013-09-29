@@ -53,8 +53,8 @@ class Pembantu {
         fclose($fptr);
     }
 
-    //public static function muatFileNERPOS($path,&$arr_word,&$arr_token,&$arr_pos,&$arr_ner) :: memuat semua token dan nerpos dari file NERPOS.
-    public static function muatFileNERPOS($path,&$arr_word,&$arr_token,&$arr_pos,&$arr_ner)
+    //public static function muatFileNERPOS($isUnitProcessed,$path,&$arr_word,&$arr_token,&$arr_pos,&$arr_ner) :: memuat semua token dan nerpos dari file NERPOS.
+    public static function muatFileNERPOS($isUnitProcessed,$path,&$arr_word,&$arr_token,&$arr_pos,&$arr_ner,&$arr_word_ori,&$arr_token_ori)
     {
         $fptr = fopen($path, 'r');
 
@@ -63,12 +63,29 @@ class Pembantu {
         $arr_token = array();       //menampung token (lemma)
         $arr_pos = array();         //menampung POS
         $arr_ner = array();         //menampung NER
+        if($isUnitProcessed)
+        {
+            $arr_word_ori = array();        //menampung word original
+            $arr_token_ori = array();       //menampung token (lemma) original
+        }
 
+        //abou 21-08-2013 : menggabungkan word dan token dengan info POS dan NER, kemudian memisahkan kembali ke array $arr_pos dan $arr_token setelah memproses unit EDU.
         while($buff)
         {
             $tmpArr = explode("\t", $buff);
-            array_push($arr_word, $tmpArr[2]);
-            array_push($arr_token, $tmpArr[3]);
+
+            if($isUnitProcessed)
+            {
+                array_push($arr_word, $tmpArr[2] . "<~>" . $tmpArr[6] . '<~>' . trim($tmpArr[7]));
+                array_push($arr_word_ori, $tmpArr[2]);
+                array_push($arr_token, $tmpArr[3] . "<~>" . $tmpArr[6] . '<~>' . trim($tmpArr[7]));
+                array_push($arr_token_ori, $tmpArr[3]);            
+            }
+            else
+            {
+                array_push($arr_word, $tmpArr[2]);
+                array_push($arr_token, $tmpArr[3]);
+            }
             array_push($arr_pos, $tmpArr[6]);
             array_push($arr_ner, trim($tmpArr[7]));
             $buff = fgets($fptr);
@@ -312,12 +329,19 @@ class Pembantu {
                 $targetValid = false;
                 $idxNERPOS = $i + $indexAwalNERPOS;   //index NER untuk kata yang sedang aktif sekarang dalam unit.
 
-                if($penandaFilterTokenEntity & Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]))
+                if($penandaFilterTokenEntity & 
+                        Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]))
                 {
                     $targetValid = true;        //20130612 : flag untuk validasi hasil cek target.
                     $NERKataPertama = Pembantu::ambilNilaiTag($arrayNERPOS[$idxNERPOS]);
                     while(($i <= $index_akhir) && ($idxAktif <= $idxAkhir))               //cek index, jangan melebihi batas akhir.
                     {
+                        if(!isset($arrayKata[$i]))  //aboubakr 20130709 : memastikan index valid : jika index sudah lewat.
+                        {
+                            $i++;
+                            continue;
+                        }
+   
                         if(!strcasecmp($arrayKataPisah[$idxAktif],$arrayKata[$i]))
                         {
                             $idxAktif++;        //index aktif, menunjukkan index dari gabungan kata target yang dicari. jika masih menemukan kata yang sama dalam unit, maka lanjutkan cek ke index berikutnya.
@@ -553,7 +577,8 @@ class Pembantu {
                 return Umum::FILTER_POS_VB;
             case strstr($tag, "JJ") :
                 return Umum::FILTER_POS_JJ;
-            case strstr($tag, "PRP") :
+            //case strstr($tag, "PRP") :
+            case (strcasecmp($tag, "PRP") == 0) :   // aboubakr 20130709 : change condition check for PRP.. must be equal.
                 return Umum::FILTER_POS_PRP;
 // NER
             case strstr($tag, "PERSON") :

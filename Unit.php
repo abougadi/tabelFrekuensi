@@ -15,9 +15,13 @@ class Unit {
     public $array_jml_kata_per_edu;         // array jumlah kata untuk tiap EDU, sesuai urutan EDU.
     public $array_jml_kata_per_sentence;    // array jumlah kata untuk tiap sentence, sesuai urutan sentence.
     public $array_word;                     // array word, diambil dari file NERPOS, index ke 2 dari tabel NERPOS.
+    public $array_word_ori;                 // array word original, berisi list semua word, tempat menyimpan list word asli, dipakai untuk mengembalikan $array_word ke kondisi asli setelah pemrosesan unit.
     public $array_token;                    // array of token (lemma), diambil dari file NERPOS, index ke 3 dari tabel NERPOS.
+    public $array_token_ori;                // array token original, berisi list semua token, tempat menyimpan list token asli, dipakai untuk mengembalikan $array_token ke kondisi asli setelah pemrosesan unit.
     public $array_pos;                      // array of POS, diambil dari file NERPOS, index ke 6 dari tabel NERPOS.
+    public $array_pos_unit;                 // array of POS setelah pemrosesan unit.
     public $array_ner;                      // array of NER, diambil dari file NERPOS, index ke 7 dari tabel NERPOS.
+    public $array_ner_unit;                 // array of NER setelah pemrosesan unit.
     public $array_unit_string;              // array unit String setelah diproses.
     public $pilihanKriteria;                // pilihan kriteria.
 
@@ -29,9 +33,13 @@ class Unit {
         $this->array_jml_kata_per_edu       = array();
         $this->array_jml_kata_per_sentence  = array();
         $this->array_word                   = array();
+        $this->array_word_ori               = array();
         $this->array_token                  = array();
+        $this->array_token_ori              = array();
         $this->array_pos                    = array();
+        $this->array_pos_unit               = array();
         $this->array_ner                    = array();
+        $this->array_ner_unit               = array();
         $this->pilihanKriteria              = $pilihanKriteria;
 
         $this->persiapkanFileUnit($folder);
@@ -63,7 +71,7 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
     public function persiapkanFileUnit($folder)
     {
         //Mengambil token dan nerpos.
-        Pembantu::muatFileNERPOS($folder . $this->nama . Umum::AKHIRAN_NERPOS_FILE,$this->array_word,$this->array_token,$this->array_pos,$this->array_ner);
+        Pembantu::muatFileNERPOS(true,$folder . $this->nama . Umum::AKHIRAN_NERPOS_FILE,$this->array_word,$this->array_token,$this->array_pos,$this->array_ner,$this->array_word_ori,$this->array_token_ori);
         //Ambil jumlah kata untuk tiap unit
         Pembantu::muatFileEDU($folder . $this->nama . Umum::AKHIRAN_EDU_FILE, $this->array_jml_kata_per_edu, $this->array_jml_kata_per_sentence);
 //echo '[abouDebug]' . $this->nama . ' COUNT EDU :: '.  json_encode($this->array_jml_kata_per_edu).'<br/>';
@@ -176,19 +184,31 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                 $arrayUnit1 = array();
                 $arrayUnit2 = array();
                 $arrayUnitSebelumnya = array();
+                $singleEDUSentenceFlag = false; //flag untuk sentence yang hanya mengandung satu EDU.
 
+//Pembantu::cetakDebug("Batas Sentence sekarang : " . $batasSentenceSekarang . "<br/>");
                 for($i=0; $i < $totalUnitEdu; $i++)
                 {
                     $indexTokenAkhir += $this->array_jml_kata_per_edu[$i];
 
                     //tentukan batas sentence baru untuk putaran berikutnya.
-                    if($indexTokenAkhir == $batasSentenceSekarang && $i > 0)
+                    if($indexTokenAkhir == $batasSentenceSekarang && $i >= 0)
                     {
-//echo "Sentence Baru --> $batasSentenceSekarang -- $indexTokenAkhir <br/><br/>";
+//Pembantu::cetakDebug("Sentence Baru --> $batasSentenceSekarang -- $indexTokenAkhir <br/><br/>");
                         $sentenceBaru = true;
                         $indeksSentenceSekarang++;
                         if($indeksSentenceSekarang < count($this->array_jml_kata_per_sentence))
                         {
+                            if($this->array_jml_kata_per_edu[$i] == $this->array_jml_kata_per_sentence[$indeksSentenceSekarang-1])
+                            {
+                                $singleEDUSentenceFlag = true;
+//Pembantu::cetakDebug("SINGLE EDU SENTENCE :: " . $this->array_jml_kata_per_edu[$i] . " VS " . $this->array_jml_kata_per_sentence[$indeksSentenceSekarang-1]);
+                            }
+                            else
+                            {
+                                $singleEDUSentenceFlag = false;
+                            }
+
                             $batasSentenceSekarang += $this->array_jml_kata_per_sentence[$indeksSentenceSekarang];
                         }
                     }
@@ -223,23 +243,34 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
 
                     if(!$arrayUnitSebelumnya && $arrayUnit1[0] != 'NULL')
                     {
+//Pembantu::cetakDebug("##############bound1 ".  json_encode($sentenceBaru)." ###############<br/>");
+//Pembantu::cetakDebug("Masuk 1.1 NULL<br/>");
+//Pembantu::cetakDebug("Masuk 1.2 " . json_encode($arrayUnit2) . "<br/>");
                         array_push($this->array_unit_string, array(array('NULL'),$arrayUnit2));
                     }
 
                     if($arrayUnit1)
                     {
+//Pembantu::cetakDebug("##############bound2 ".  json_encode($sentenceBaru)." ###############<br/>");
+//Pembantu::cetakDebug("Masuk 2.1 " . json_encode($arrayUnit1) . "<br/>");
+//Pembantu::cetakDebug("Masuk 2.2 " . json_encode($arrayUnit2) . "<br/>");
                         array_push($this->array_unit_string, array($arrayUnit1,$arrayUnit2));
                     }
 
-                    if($sentenceBaru && $i > 0 && $arrayUnit1)
+                    if($sentenceBaru && $i > 0 && ($i < ($totalUnitEdu-1)) && $arrayUnit1)
                     {
-//echo "Masuk " . json_encode($arrayUnit1) . "<br/>";
-                        array_push($this->array_unit_string, array($arrayUnit2,array('NULL')));
+//Pembantu::cetakDebug("##############bound3 $batasSentenceSekarang ==== $indexTokenSekarang -- ".  $this->array_jml_kata_per_edu[$i+1] ." ###############<br/>");
+//Pembantu::cetakDebug("Masuk 3.1 " . json_encode($arrayUnit2) . "<br/>");
+//Pembantu::cetakDebug("Masuk 3.2 NULL <br/>");
+                        if(!$singleEDUSentenceFlag) //special handling untuk sentence dengan satu EDU.
+                        {
+                            array_push($this->array_unit_string, array($arrayUnit2,array('NULL')));
+                        }
                         $arrayUnitSebelumnya = NULL;
                     }
                     else
                     {
-                        if($arrayUnit1 || !($sentenceBaru && $i > 0))
+                        if(($arrayUnit1 || !$sentenceBaru) && !($sentenceBaru && $i ==0))   //special handling untuk sentence pertama pada index pertama ---> && !($sentenceBaru && $i ==0)
                         {
                             $arrayUnitSebelumnya = $arrayUnit2;
                         }
@@ -261,23 +292,23 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                     $awalNULL = false;
                     for($i = 0 ; $i < $totalUnitString-1; $i++)
                     {
-//echo "$i --> " . json_encode($arrayTemp[$i][1][0]) . "<br/>";
+//Pembantu::cetakDebug("$i --> " . json_encode($arrayTemp[$i][1][0]) . "<br/>");
                         if($arrayTemp[$i][1][0] != 'NULL' && !($awalNULL && $arrayTemp[$i+1][1][0] == 'NULL'))
                         {
                             $this->array_unit_string[$i-$jumlahSkip] = array();
                             array_push($this->array_unit_string[$i-$jumlahSkip], $arrayTemp[$i][0]);
-//echo "1 $awalNULL --> " . json_encode($arrayTemp[$i][0]) . "<br/>";
+//Pembantu::cetakDebug("1 $awalNULL --> " . json_encode($arrayTemp[$i][0]) . "<br/>");
                             array_push($this->array_unit_string[$i-$jumlahSkip], $arrayTemp[$i][1]);
-//echo "2 --> " . json_encode($arrayTemp[$i][1]) . "<br/>";
+//Pembantu::cetakDebug("2 --> " . json_encode($arrayTemp[$i][1]) . "<br/>");
                             if($arrayTemp[$i+1][0][0] == $arrayTemp[$i][1][0])
                             {
                                 array_push($this->array_unit_string[$i-$jumlahSkip], $arrayTemp[$i+1][1]);
-//echo "3 --> " . json_encode($arrayTemp[$i+1][1]) . "<br/><br/>";
+//Pembantu::cetakDebug("3.1 --> " . json_encode($arrayTemp[$i+1][1]) . "<br/><br/>");
                             }
                             else
                             {
                                 array_push($this->array_unit_string[$i-$jumlahSkip], $arrayTemp[$i+1][0]);
-//echo "3 --> " . json_encode($arrayTemp[$i+1][0]) . "<br/><br/>";
+//Pembantu::cetakDebug("3.2 --> " . json_encode($arrayTemp[$i+1][0]) . "<br/><br/>");
                             }
 
                             if($arrayTemp[$i][0][0] == 'NULL')
@@ -307,6 +338,60 @@ echo "<span style='font-weight:bold;color:brown;font-size:large;'>=========Total
                 }
                 break;
         }
+        
+        //abou 21-08-2013 : Memisahkan kembali data POS dan NER sesuai dengan tiap kata dalam unit EDU.. sesuai dengan urutan dalam unit string.
+
+        if($pilihanUnitString == Umum::UNIT_STRING_DOUBLE_EDU || $pilihanUnitString == Umum::UNIT_STRING_TRIPLE_EDU)
+        {
+            $arrayDebugUnitString = array();
+            for($i=0;$i<count($this->array_unit_string);$i++)
+            {
+                for($j=0;$j<count($this->array_unit_string[$i]);$j++)
+                {
+                    for($k=0;$k<count($this->array_unit_string[$i][$j]);$k++)
+                    {
+                        if($this->array_unit_string[$i][$j][$k] != "NULL")
+                        {
+                            $temp_arr = explode("<~>",$this->array_unit_string[$i][$j][$k]);
+                            array_push($this->array_pos_unit,$temp_arr[1]);
+                            array_push($this->array_ner_unit,$temp_arr[2]);
+                            $this->array_unit_string[$i][$j][$k] = $temp_arr[0];    //replace with original unit.
+                            array_push($arrayDebugUnitString,$temp_arr[0]);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for($i=0;$i<count($this->array_unit_string);$i++)
+            {
+                for($j=0;$j<count($this->array_unit_string[$i]);$j++)
+                {
+                    $temp_arr = explode("<~>",$this->array_unit_string[$i][$j]);
+                    array_push($this->array_pos_unit,$temp_arr[1]);
+                    array_push($this->array_ner_unit,$temp_arr[2]);
+                    $this->array_unit_string[$i][$j] = $temp_arr[0];    //replace with original unit.
+                }
+            }
+        }
+
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY WORD : </span>" . json_encode($this->array_word) . "<br/>");
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY TOKEN : </span>" . json_encode($this->array_token) . "<br/>");
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY UNIT STRING : </span>" . json_encode($this->array_unit_string) . "<br/>");
+//
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY UNIT STRING DEBUG (" . count($arrayDebugUnitString) . ") : </span>" . json_encode($arrayDebugUnitString) . "<br/>");
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY NER UNIT (" . count($this->array_ner_unit) . ") : </span>" . json_encode($this->array_ner_unit) . "<br/>");
+//Pembantu::cetakDebug("<span style='color:red;'>ARRAY POS UNIT (" . count($this->array_pos_unit) . ") : </span>" . json_encode($this->array_pos_unit) . "<br/>");
+        
+        //Kembalikan array_word dan array_token ke nilai awal...
+        $this->array_word = array();
+        $this->array_word = $this->array_word_ori;
+        $this->array_word_ori = array();
+
+        $this->array_token = array();
+        $this->array_token = $this->array_token_ori;
+        $this->array_token_ori = array();
     }
 
     private function debugMultipleEDU($namaFile)

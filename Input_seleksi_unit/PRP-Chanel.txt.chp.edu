@@ -1,13 +1,11 @@
-Chanel is a French company owned by Wertheimer brothers . <S>
-They are grandsons of Pierre Wertheimer , 
+Chanel is a French company <E>
+owned by Wertheimer brothers . <S>
+They are grandsons of Pierre Wertheimer , <E>
 who was a business partner of Gabrielle Chanel . <S>
-Coco Chanel , 
-how she famously known in fashion business , 
+Coco Chanel , <E>
+how she famously known in fashion business , <E>
 designed elegance dress for models and actresses . <S>
-House of Chanel , 
-her fashion brand , 
-is most famous for its little black dress , the perfume No. 5 de Chanel , and the Chanel Suit . <S>
-It was originated in 1909 , 
-when she opened a shop at 160 Boulevard Malesherbes , 
-the ground floor of the Parisian flat of Etienne Balsan , 
+House of Chanel , her fashion brand , is most famous for its little black dress , the perfume No. 5 de Chanel , and the Chanel Suit . <S>
+It was originated in 1909 , <E>
+when she opened a shop at 160 Boulevard Malesherbes , the ground floor of the Parisian flat of Etienne Balsan , <E>
 of whom she was mistress . <S>

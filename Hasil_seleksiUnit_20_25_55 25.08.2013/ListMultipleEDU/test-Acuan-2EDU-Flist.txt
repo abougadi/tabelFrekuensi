@@ -1,0 +1,7 @@
+NULL  ### John Fitzgerald Kennedy was the 35th President of the United States , 
+John Fitzgerald Kennedy was the 35th President of the United States ,  ### and was serving from 1961 until his assassination in 1963 . 
+and was serving from 1961 until his assassination in 1963 .  ### NULL 
+NULL  ### The John F. Kennedy Presidential Library and Museum is the presidential library and museum of Kennedy , the official repository for original papers and correspondence of the Kennedy Administration . 
+NULL  ### The library and museum were founded in Massachusetts in 1979 by President Jimmy Carter 
+The library and museum were founded in Massachusetts in 1979 by President Jimmy Carter  ### and were dedicated for the place 
+and were dedicated for the place  ### where John F. Kennedy was born . 

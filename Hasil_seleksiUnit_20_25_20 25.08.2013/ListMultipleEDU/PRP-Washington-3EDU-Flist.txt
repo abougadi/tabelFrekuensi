@@ -1,0 +1,16 @@
+NULL  ### George Washington was the first President of the United States ,  ### who was one of the Founding Fathers of the United States . 
+NULL  ### He drafted the Constitution  ### and he served two terms in office . 
+NULL  ### Washington was born in Virginia  ### where his family owned tobacco plantations 
+Washington was born in Virginia  ### where his family owned tobacco plantations  ### and slaves . 
+where his family owned tobacco plantations  ### and slaves .  ### NULL 
+NULL  ### After both his father and older brother died  ### when he was young , 
+After both his father and older brother died  ### when he was young ,  ### he became personally attached to William Fairfax , 
+when he was young ,  ### he became personally attached to William Fairfax ,  ### who promoted his career . 
+he became personally attached to William Fairfax ,  ### who promoted his career .  ### NULL 
+NULL  ### George Washington opposed slavery  ### as he viewed it as a potentially moral threat to the unity of the nation . 
+NULL  ### When Washington married Martha Custis in 1759 ,  ### he owned at least 36 slaves , 
+When Washington married Martha Custis in 1759 ,  ### he owned at least 36 slaves ,  ### then his wife brought 85 slaves 
+he owned at least 36 slaves ,  ### then his wife brought 85 slaves  ### inherited from her late husband 's estate . 
+then his wife brought 85 slaves  ### inherited from her late husband 's estate .  ### NULL 
+NULL  ### They had 135 slaves in 1772 ,  ### all of them placed at his plantations at Mount Vernon . 
+NULL  ### The Washington Monument , George Washington University , and George Washington Masonic National Memorial , have their name given in honor  ### of George Washington . 

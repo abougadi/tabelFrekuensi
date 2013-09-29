@@ -231,7 +231,7 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
     //public function pemrosesanSeleksiUnit() :: lakukan filtering berdasarkan pilihan kriteria.
     public function pemrosesanSeleksiUnit()
     {
-Pembantu::cetakDebug("<br/><br/>**********HASIL FILTERING TOKEN / ENTITY*********<br/><br/>");
+echo("<br/><br/>**********HASIL FILTERING TOKEN / ENTITY*********<br/><br/>");
         //pemfilteran berdasarkan pilihan kriteria.
         if(Pembantu::gunakanLemma($this->penanda_filter_token_entity))  // gunakan pemfilteran token.
         {
@@ -240,7 +240,7 @@ Pembantu::cetakDebug("Gunakan Filter Token<br/>");
             for($i=0; $i < $totalUnit; $i++)
             {
                 $this->array_hasil_filtering[$i] = $this->filterArrayToken($this->array_objek_unit[$i]);
-Pembantu::cetakDebug("Hasil untuk file " . $this->array_objek_unit[$i]->nama . " :: " . json_encode($this->array_hasil_filtering[$i]) . "<br/><br/>");
+echo("Hasil untuk file " . $this->array_objek_unit[$i]->nama . " :: " . json_encode($this->array_hasil_filtering[$i]) . "<br/><br/>");
             }
         }
         else  // gunakan pemfilteran entity.
@@ -250,7 +250,7 @@ Pembantu::cetakDebug("Gunakan Filter Entity<br/>");
             for($i=0; $i < $totalUnit; $i++)
             {
                 $this->array_hasil_filtering[$i] = $this->filterArrayEntity($this->array_objek_unit[$i]);
-Pembantu::cetakDebug("Hasil untuk file " . $this->array_objek_unit[$i]->nama . " :: " . json_encode($this->array_hasil_filtering[$i]) . "<br/><br/>");
+echo("Hasil untuk file " . $this->array_objek_unit[$i]->nama . " :: " . json_encode($this->array_hasil_filtering[$i]) . "<br/><br/>");
             }
         }
 
@@ -271,18 +271,22 @@ echo "<br/><br/>**********HASIL PERHITUNGAN FREKUENSI KEMUNCULAN TOKEN PADA TIAP
             $totalUnitString = count($this->array_objek_unit[$i]->array_unit_string);   // jumlah unit string.
             $this->array_freq_hasil_filtering[$i] = array();
             $awalIdxNER = 0;
-            $idxAwalUnitSebelumnya = 0;
-            $jumlahKataUnitSebelumnya = 0;
-            $jumlahKataUnitSebelumnya_akhir = 0;    //khusus triple EDU
 
-echo "Total UnitString = $totalUnitString<br/>";
+            //abou 25-08-2013 : unused
+//            $idxAwalUnitSebelumnya = 0;
+//            $jumlahKataUnitSebelumnya = 0;
+//            $jumlahKataUnitSebelumnya_akhir = 0;    //khusus triple EDU
+
+echo("Total UnitString = $totalUnitString<br/>");
             for($j=0;$j<$totalUnitString;$j++)
             {
                 $this->array_freq_hasil_filtering[$i][$j] = array();
                 $jumlahToken = count($this->array_hasil_filtering[$i]);
                 $indexAkhirPencarian = count($this->array_objek_unit[$i]->array_unit_string[$j]);
 
-// aboubakr 20120917 : HUTANG!!! tangani triple EDU. -_-"
+                /*
+                 * abou 25-08-2013 : Tidak perlu digunakan, NER dan POS sudah tersimpan sesuai urutan per kata dalam array unit string.
+                 * 
                 if($isMultipleEDU)      //aboubakr 20120916 : tentukan awalIdxkata tiap unitnya
                 {
                     if($this->array_objek_unit[$i]->array_unit_string[$j][0][0] != 'NULL')
@@ -321,37 +325,44 @@ echo "Total UnitString = $totalUnitString<br/>";
                     }
 //echo "Unit ke-$j -> " . $this->array_objek_unit[$i]->array_unit_string[$j][0][0] . " :: idxSebelum = $idxAwalUnitSebelumnya , jumlahKataSebelum = $jumlahKataUnitSebelumnya , awalIndex = $awalIdxNER<br/>";
                 }
+                */
+                
 //Pembantu::cetakDebug("[abouDebug] NER Array " . json_encode($this->array_objek_unit[$i]->array_ner) . "<br/>");//suspect 18022013 : ga dicek di fungsi hitungKata!!!
+                
+                $arrayUnitStringMultiEDU = array(); //abou 25-08-2013 : gunakan sebagai iterator awalIdxNER.
                 for($k = 0; $k < $jumlahToken; $k++)
                 {
                     if($isMultipleEDU)  // jika unit string adalah double EDU atau Triple EDU
                     {
-                        $arrayUnitStringMultiEDU = array();
-
-                        $totalKataDalamUnit = 0;
-                        for($x=0;$x<$jumlahUnitString;$x++)
+                        if($k==0)   //abou 25-08-2013 : cukup sekali proses, gunakan untuk sisa token.
                         {
-                            $jumlahTokenUnitString = count($this->array_objek_unit[$i]->array_unit_string[$j][$x]);
-
-                            for($y=0;$y<$jumlahTokenUnitString;$y++)
+                            $totalKataDalamUnit = 0;
+                            for($x=0;$x<$jumlahUnitString;$x++)
                             {
-                                $totalKataDalamUnit++;
-                                if($this->array_objek_unit[$i]->array_unit_string[$j][$x][$y] != 'NULL')
+                                $jumlahTokenUnitString = count($this->array_objek_unit[$i]->array_unit_string[$j][$x]);
+
+                                for($y=0;$y<$jumlahTokenUnitString;$y++)
                                 {
-                                    array_push($arrayUnitStringMultiEDU, $this->array_objek_unit[$i]->array_unit_string[$j][$x][$y]);
+                                    $totalKataDalamUnit++;
+                                    if($this->array_objek_unit[$i]->array_unit_string[$j][$x][$y] != 'NULL')
+                                    {
+                                        array_push($arrayUnitStringMultiEDU, $this->array_objek_unit[$i]->array_unit_string[$j][$x][$y]);
+                                    }
                                 }
                             }
                         }
-//Pembantu::cetakDebug("Kata Dicari : " . $this->array_hasil_filtering[$i][$k] . " ,  array target cari sampai index ke-$indexAkhirPencarian : " . json_encode($arrayUnitStringMultiEDU) . "<br/>");
-                        
+
+//Pembantu::cetakDebug("Kata Dicari : " . $this->array_hasil_filtering[$i][$k] . " ,  array target cari sampai index ke-$indexAkhirPencarian : " . json_encode($arrayUnitStringMultiEDU) . "<br/>");                        
                         //16062013 : Pisahkan untuk pengecekan NER dan POS. Jika Filter yang digunakan filter NER, supply array NER untuk parameter ke 3, otherwise, supply array POS.
                         if($this->penanda_filter_token_entity > Umum::FILTER_MASK_POS)
                         {
-                            $this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_ner,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
+                            //$this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_ner,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
+                            $this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_ner_unit,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
                         }
                         else
                         {
-                            $this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_pos,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
+                            //$this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_pos,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
+                            $this->array_freq_hasil_filtering[$i][$j][$k] = Pembantu::hitungKata($this->array_hasil_filtering[$i][$k],$arrayUnitStringMultiEDU,$this->array_objek_unit[$i]->array_pos_unit,$awalIdxNER,$this->penanda_filter_token_entity,0,$totalKataDalamUnit-1,true);
                         }
                     }
                     else    // untuk selain multiple EDU.
@@ -367,9 +378,14 @@ echo "Total UnitString = $totalUnitString<br/>";
                         }
                     }
                 }
+
                 if(!$isMultipleEDU) //aboubakr 20120916 : jika bukan multiple EDU.
                 {
                     $awalIdxNER += $indexAkhirPencarian;
+                }
+                else
+                {
+                    $awalIdxNER += count($arrayUnitStringMultiEDU);
                 }
             }
 Pembantu::cetakDebug("Hasil Frekuensi Untuk File - " . $this->array_objek_unit[$i]->nama . " ==> " . json_encode($this->array_freq_hasil_filtering[$i]) . "<br/><br/>");

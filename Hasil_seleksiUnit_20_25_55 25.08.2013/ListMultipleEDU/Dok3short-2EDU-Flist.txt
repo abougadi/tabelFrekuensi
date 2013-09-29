@@ -1,0 +1,7 @@
+NULL  ### Shipment of gold arrived in a truck . 
+NULL  ### The gold would remain in the truck 
+The gold would remain in the truck  ### until it was checked 
+until it was checked  ### whether there was any damage or not before moving it into a warehouse . 
+whether there was any damage or not before moving it into a warehouse .  ### NULL 
+NULL  ### The delivery would not happen 
+The delivery would not happen  ### if it was damage . 

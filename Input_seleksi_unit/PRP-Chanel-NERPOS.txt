@@ -47,7 +47,7 @@
 4	2	of	of	268	270	IN	O
 4	3	Chanel	Chanel	271	277	NNP	O
 4	4	,	,	278	279	,	O
-4	5	her	she	280	283	PRP$	O
+4	5	her	she	280	283	PRP	O
 4	6	fashion	fashion	284	291	NN	O
 4	7	brand	brand	292	297	NN	O
 4	8	,	,	298	299	,	O
@@ -55,7 +55,7 @@
 4	10	most	most	303	307	RBS	O
 4	11	famous	famous	308	314	JJ	O
 4	12	for	for	315	318	IN	O
-4	13	its	its	319	322	PRP$	O
+4	13	its	its	319	322	PRP	O
 4	14	little	little	323	329	JJ	O
 4	15	black	black	330	335	JJ	O
 4	16	dress	dress	336	341	NN	O
@@ -104,4 +104,4 @@
 5	30	she	she	545	548	PRP	O
 5	31	was	be	549	552	VBD	O
 5	32	mistress	mistress	553	561	JJ	O
-5	33	.	.	562	563	.	O	
+5	33	.	.	562	563	.	O
