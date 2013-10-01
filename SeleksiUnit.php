@@ -193,7 +193,8 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
                 continue;
             }
 
-            if(($i - $indexSebelumnya == 1) && !(Umum::FILTER_TANPA_KRITERIA & $this->penanda_filter_token_entity))  //berurutan.. gabungkan ke elemen entity sebelumnya.
+            if(($i - $indexSebelumnya == 1) && !(Umum::FILTER_TANPA_KRITERIA & $this->penanda_filter_token_entity) //jika berurutan.. gabungkan ke elemen entity sebelumnya.
+                    && ($objekUnit->array_ner[$i] == $objekUnit->array_ner[$indexSebelumnya]))  //aboubakr 01102013 : tambahkan kondisi, NER harus sama dengan yang sebelumnya, baru digabungkan. Memperbaiki error NUMBER yang tergabung ke LOCATION, dll.
             {
 //echo "GABUNG to $indexElemenSebelumnya : $kataTarget , POS: $POSTarget , NER: $NERTarget<br/>";
                 //20130401 : menemukan problem disini, menyebabkan double token, solusi sementara, selalu cek terhadap elemen-elemen sebelumnya.
@@ -223,8 +224,7 @@ echo "<br/><br/>**********MEMUAT UNIT STRING SESUAI UNIT STRING PILIHAN*********
                 }
             }
             $indexSebelumnya = $i;  //simpan index sebelumnya
-        }
-
+        }        
         return array_merge(array_flip(array_flip($arrayHasil))); //20130401 : see http://www.php.net/manual/en/function.array-unique.php#70786
     }
 
